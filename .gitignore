@@ -13,3 +13,7 @@ Shaders/Compiled/*spv
 Shaders/bintoc.exe
 Shaders/bintoc.obj
 Windows/VisualStudio/.vs
+*.qpc_hash
+*.sln
+*.vcxproj
+*.filters

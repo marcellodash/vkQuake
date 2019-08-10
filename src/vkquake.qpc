@@ -1,0 +1,337 @@
+// TODO: look at other editor projects, like vscode, and clion, and make sure this would work with that
+
+macro PROJECT_NAME "VkQuake"
+
+macro CONFIG "Debug" 	[$DEBUG]
+macro CONFIG "Release" 	[$RELEASE]
+
+macro PLAT_FOLDER "x86" [$WIN32]
+macro PLAT_FOLDER "x64" [$WIN64]
+
+configuration
+{	
+	general	
+	{
+		out_dir					"Build/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
+		int_dir					"Build_Int/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
+		
+		configuration_type		application
+		
+		language c
+		
+		include_directories
+		{
+			"$(VK_SDK_PATH)/Include"	[$VSTUDIO]
+			"../Windows/SDL2/include"
+			"../Windows/codecs/include"
+			"../Windows/misc/include"
+			"common"
+			"engine"
+			"launcher"
+			"libq"
+			"mathlib"
+		}
+		
+		library_directories		[$VSTUDIO]
+		{
+			"$(VK_SDK_PATH)/Lib32"	"../Windows/SDL2/lib/"		[$WIN32]
+			"$(VK_SDK_PATH)/Lib"	"../Windows/SDL2/lib64/"	[$WIN64]
+			
+			"../Windows/codecs/$PLAT_FOLDER/"
+		}
+	}
+	
+	compiler
+	{		
+		preprocessor_definitions
+		{
+			WIN32 _WINDOWS	[$WINDOWS]
+			
+			_DEBUG	[$DEBUG]
+			NDEBUG	[$RELEASE]
+			
+			"_USE_WINSOCK2"
+			"_CRT_NONSTDC_NO_DEPRECATE"
+			"_CRT_SECURE_NO_WARNINGS"
+			"_WINSOCK_DEPRECATED_NO_WARNINGS"
+			"USE_SDL2"
+			"USE_CODEC_MP3"
+			"USE_CODEC_VORBIS"
+			"USE_CODEC_WAVE"
+			"USE_CODEC_FLAC"
+			"USE_CODEC_OPUS"
+			"USE_CODEC_MIKMOD"
+			"USE_CODEC_UMX"
+		}
+		
+		options	[$VSTUDIO]
+		{
+			/Od /MDd /ZI /RTC1	[$DEBUG]
+			/O2 /MD /Zi			[$RELEASE]
+			/TC /W3
+		}
+	}
+	
+	linker
+	{		
+		libraries	[$WINDOWS]
+		{
+			"libvorbisfile"		
+			"libvorbis"
+			"libopusfile"
+			"libopus"
+			"libFLAC"
+			"libogg"
+			"libmad"
+			"libmikmod"
+			"ws2_32"
+			"winmm"
+			
+			"SDL2"
+			"SDL2main"
+			
+			"vulkan-1"
+		}
+		
+		options	[$VSTUDIO]
+		{
+			/SUBSYSTEM:WINDOWS
+		}
+	}
+	
+	post_build
+	{
+		command_line	"copy \"$(SolutionDir)..\Windows\codecs\$PLAT_FOLDER\*.dll\" \"$(TargetDir)\"" "\n" 	[$VSTUDIO]
+		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib\*.dll\" \"$(TargetDir)\""					[$VSTUDIO && $WIN32]
+		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$VSTUDIO && $WIN64]
+		
+		use_in_build	"true"
+	}
+}
+
+files
+{
+	folder "Sound"
+	{
+		"engine/snd_codec.c"
+		"engine/snd_dma.c"
+		"engine/snd_flac.c"
+		"engine/snd_mem.c"
+		"engine/snd_mikmod.c"
+		"engine/snd_mix.c"
+		"engine/snd_mp3.c"
+		"engine/snd_opus.c"
+		"engine/snd_sdl.c"
+		"engine/snd_umx.c"
+		"engine/snd_vorbis.c"
+		"engine/snd_wave.c"
+		"engine/snd_xmp.c"
+		"engine/cd_sdl.c"
+		"engine/bgmusic.c"
+		
+		"engine/snd_codec.h"
+		"engine/snd_codeci.h"
+		"engine/snd_flac.h"
+		"engine/snd_mikmod.h"
+		"engine/snd_mp3.h"
+		"engine/snd_opus.h"
+		"engine/snd_umx.h"
+		"engine/snd_vorbis.h"
+		"engine/snd_wave.h"
+		"engine/snd_xmp.h"
+		"engine/bgmusic.h"
+		"engine/q_sound.h"
+	}
+		
+	folder "Network"
+	{
+		"engine/net_dgrm.c"
+		"engine/net_loop.c"
+		"engine/net_main.c"
+		"engine/net_win.c"
+		"engine/net_wins.c"
+		"engine/net_wipx.c"
+		
+		"engine/net.h"
+		"engine/net_defs.h"
+		"engine/net_dgrm.h"
+		"engine/net_loop.h"
+		"engine/net_sys.h"
+		"engine/net_wins.h"
+		"engine/net_wipx.h"
+	}
+
+	folder "Renderer"
+	{
+		"engine/gl_draw.c"
+		"engine/gl_fog.c"
+		"engine/gl_mesh.c"
+		"engine/gl_model.c"
+		"engine/gl_refrag.c"
+		"engine/gl_rlight.c"
+		"engine/gl_rmain.c"
+		"engine/gl_rmisc.c"
+		"engine/gl_screen.c"
+		"engine/gl_sky.c"
+		"engine/gl_texmgr.c"
+		"engine/gl_vidsdl.c"
+		"engine/gl_warp.c"
+		"engine/gl_heap.c"
+			
+		"engine/r_alias.c"
+		"engine/r_brush.c"
+		"engine/r_part.c"
+		"engine/r_sprite.c"
+		"engine/r_world.c"
+		
+		"engine/gl_model.h"
+		"engine/gl_texmgr.h"
+		"engine/gl_warp_sin.h"
+		"engine/render.h"
+		"engine/glquake.h"
+		"engine/draw.h"
+		"engine/screen.h"
+		"engine/gl_heap.h"
+	}
+
+	folder "Main"
+	{
+		"engine/cfgfile.c"
+		"engine/chase.c"
+		"engine/cmd.c"
+		"engine/common.c"
+		"engine/console.c"
+		"engine/crc.c"
+		"engine/cvar.c"
+		"engine/host.c"
+		"engine/host_cmd.c"
+		"engine/image.c"
+		"engine/in_sdl.c"
+		"engine/keys.c"
+		"engine/main_sdl.c"
+		"engine/mathlib.c"
+		"engine/menu.c"
+		"engine/pl_win.c"
+		"engine/pr_cmds.c"
+		"engine/pr_edict.c"
+		"engine/pr_exec.c"
+		"engine/sbar.c"
+		"engine/strlcat.c"
+		"engine/strlcpy.c"
+		"engine/sys_sdl_win.c"
+		"engine/view.c"
+		"engine/wad.c"
+		"engine/world.c"
+		"engine/zone.c"
+			
+		"engine/anorm_dots.h"
+		"engine/anorms.h"
+		"engine/arch_def.h"
+		"engine/bspfile.h"
+		"engine/cdaudio.h"
+		"engine/cfgfile.h"
+		"engine/client.h"
+		"engine/cmd.h"
+		"engine/common.h"
+		"engine/console.h"
+		"engine/crc.h"
+		"engine/cvar.h"
+		"engine/image.h"
+		"engine/input.h"
+		"engine/keys.h"
+		"engine/mathlib.h"
+		"engine/menu.h"
+		"engine/modelgen.h"
+		"engine/platform.h"
+		"engine/pr_comp.h"
+		"engine/progdefs.h"
+		"engine/progs.h"
+		"engine/protocol.h"
+		"engine/q_stdinc.h"
+		"engine/qs_bmp.h"
+		"engine/quakedef.h"
+		"engine/resource.h"
+		"engine/sbar.h"
+		"engine/server.h"
+		"engine/spritegn.h"
+		"engine/strl_fn.h"
+		"engine/sys.h"
+		"engine/vid.h"
+		"engine/view.h"
+		"engine/wad.h"
+		"engine/world.h"
+		"engine/wsaerror.h"
+		"engine/zone.h"	  
+	}
+
+	folder "Client"
+	{
+		"engine/cl_tent.c"
+		"engine/cl_demo.c"
+		"engine/cl_input.c"
+		"engine/cl_main.c"
+		"engine/cl_parse.c"
+	}
+
+	folder "Server"
+	{
+		"engine/sv_main.c"
+		"engine/sv_move.c"
+		"engine/sv_phys.c"
+		"engine/sv_user.c"
+	}
+
+	folder "Shaders"
+	{
+		folder "Compiled"
+		{
+			"shaders/Compiled/basic_frag.c"
+			"shaders/Compiled/basic_notex_frag.c"
+			"shaders/Compiled/basic_vert.c"
+			"shaders/Compiled/world_frag.c"
+			"shaders/Compiled/world_vert.c"
+			"shaders/Compiled/basic_alphatest_frag.c"
+			"shaders/Compiled/alias_vert.c"
+			"shaders/Compiled/alias_frag.c"
+			"shaders/Compiled/sky_layer_frag.c"
+			"shaders/Compiled/sky_layer_vert.c"
+			"shaders/Compiled/postprocess_frag.c"
+			"shaders/Compiled/postprocess_vert.c"
+			"shaders/Compiled/screen_warp_comp.c"
+			"shaders/Compiled/screen_warp_rgba8_comp.c"
+			"shaders/Compiled/alias_alphatest_frag.c"
+			"shaders/Compiled/cs_tex_warp_comp.c"
+		}
+		
+		"shaders/Compiled/showtris_frag.c"
+		"shaders/Compiled/showtris_vert.c"
+		"shaders/shaders.h"
+		
+		"shaders/basic.frag"
+		"shaders/basic.vert"
+		"shaders/basic_notex.frag"
+		"shaders/world.vert"
+		"shaders/world.frag"
+		"shaders/compile.bat"
+		"shaders/basic_alphatest.frag"
+		"shaders/alias.frag"
+		"shaders/alias.vert"
+		"shaders/sky_layer.frag"
+		"shaders/sky_layer.vert"
+		"shaders/postprocess.vert"
+		"shaders/postprocess.frag"
+		"shaders/screen_warp.comp"
+		"shaders/screen_warp_rgba8.comp"
+		"shaders/alias_alphatest.frag"
+		"shaders/cs_tex_warp.comp"
+		"shaders/showtris.vert"
+		"shaders/showtris.frag"
+	}
+
+	folder "Resource Files"
+	{
+		"../Windows/vkQuake.rc"	[$WINDOWS]
+	}
+}
+
+
