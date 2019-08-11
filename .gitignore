@@ -19,3 +19,5 @@ Windows/VisualStudio/.vs
 *.filters
 
 build/
+
+lib/linux64/
