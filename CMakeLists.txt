@@ -25,7 +25,7 @@ option(USE_NEON "Use NEON instrinsics (AArch32/64 only)" ON)
 option(USE_SVE "Use Scalable vector instructions (AArch32/64 only)" ON)
 option(DEBUG "Enable debug" ON)
 
-set(ROOT ${CMAKE_HOME_DIRECTORY})
+set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/)
 set(SRCDIR ${CMAKE_HOME_DIRECTORY}/src)
 set(THIRDPARTY ${CMAKE_HOME_DIRECTORY}/src/thirdparty/)
 set(CODECS ${THIRDPARTY}/codecs/)
