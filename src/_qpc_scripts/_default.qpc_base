@@ -10,10 +10,16 @@ configurations
 
 project "vkquake"
 {
-	"vkquake.qpc"
+	"engine/vkquake.qpc"
+}
+
+project "libq"
+{
+	"libq/libq.qpc"
 }
 
 group "everything"
 {
 	"vkquake"
+	"libq"
 }
