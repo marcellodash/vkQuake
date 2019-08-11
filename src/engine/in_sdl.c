@@ -538,33 +538,17 @@ void IN_MouseMove(usercmd_t *cmd)
 	total_dx = 0;
 	total_dy = 0;
 
-	if ( (in_strafe.state & 1) || (lookstrafe.value && (in_mlook.state & 1) ))
-		cmd->sidemove += m_side.value * dmx;
-	else
-		cl.viewangles[YAW] -= m_yaw.value * dmx;
+	cl.viewangles[YAW] -= m_yaw.value * dmx;
 
-	if (in_mlook.state & 1)
-	{
-		if (dmx || dmy)
-			V_StopPitchDrift ();
-	}
+	if (dmx || dmy)
+		V_StopPitchDrift ();
 
-	if ( (in_mlook.state & 1) && !(in_strafe.state & 1))
-	{
-		cl.viewangles[PITCH] += m_pitch.value * dmy;
-		/* johnfitz -- variable pitch clamping */
-		if (cl.viewangles[PITCH] > cl_maxpitch.value)
-			cl.viewangles[PITCH] = cl_maxpitch.value;
-		if (cl.viewangles[PITCH] < cl_minpitch.value)
-			cl.viewangles[PITCH] = cl_minpitch.value;
-	}
-	else
-	{
-		if ((in_strafe.state & 1) && noclip_anglehack)
-			cmd->upmove -= m_forward.value * dmy;
-		else
-			cmd->forwardmove -= m_forward.value * dmy;
-	}
+	cl.viewangles[PITCH] += m_pitch.value * dmy;
+	/* johnfitz -- variable pitch clamping */
+	if (cl.viewangles[PITCH] > cl_maxpitch.value)
+		cl.viewangles[PITCH] = cl_maxpitch.value;
+	if (cl.viewangles[PITCH] < cl_minpitch.value)
+		cl.viewangles[PITCH] = cl_minpitch.value;
 }
 
 void IN_Move(usercmd_t *cmd)
