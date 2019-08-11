@@ -14,3 +14,5 @@ endif(DEFINED LINUX_BUILD)
 if(DEFINED WINDOWS_BUILD)
 	#target_link_libraries(libq)
 endif(DEFINED WINDOWS_BUILD)
+
+set_target_properties(libq PROPERTIES PREFIX "")
