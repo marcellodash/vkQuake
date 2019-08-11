@@ -21,3 +21,5 @@ Windows/VisualStudio/.vs
 build/
 
 lib/linux64/
+bin/
+lib/
