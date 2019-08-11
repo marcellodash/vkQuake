@@ -17,3 +17,5 @@ Windows/VisualStudio/.vs
 *.sln
 *.vcxproj
 *.filters
+
+build/
