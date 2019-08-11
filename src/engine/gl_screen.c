@@ -455,8 +455,8 @@ void SCR_DrawFPS (void)
 		oldframecount = r_framecount;
 		return;
 	}
-	// update value every 3/4 second
-	if (elapsed_time > 0.75)
+	// update value every 1/8 second
+	if ( elapsed_time > 0.125 )
 	{
 		lastfps = frames / elapsed_time;
 		oldtime = realtime;
