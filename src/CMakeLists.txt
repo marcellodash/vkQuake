@@ -1,1 +1,4 @@
+add_subdirectory(libq)
 add_subdirectory(engine)
+add_subdirectory(unittests)
+add_subdirectory(mathlib)

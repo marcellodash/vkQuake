@@ -18,8 +18,14 @@ project "libq"
 	"libq/libq.qpc"
 }
 
+project "mathlib"
+{
+	"mathlib/mathlib.qpc"
+}
+
 group "everything"
 {
 	"vkquake"
 	"libq"
+	"mathlib"
 }
