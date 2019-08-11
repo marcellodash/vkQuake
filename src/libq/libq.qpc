@@ -18,7 +18,7 @@ configuration
 	general	
 	{
 		out_dir		"../game/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
-		int_dir		"engine/$CONFIG/$PLAT_FOLDER"
+		int_dir		"libq/$CONFIG/$PLAT_FOLDER"
 		
 		configuration_type		dynamic_library
 		
