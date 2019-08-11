@@ -5,17 +5,10 @@ project(engine C CXX)
 
 #file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/ *.c *.cc *.cpp *.cxx *.h *.hpp *.hh *.hxx)
 
-find_package(Vulkan REQUIRED)
+find_package(PkgConfig REQUIRED)
 
-if(NOT Vulkan_FOUND)
-	message(FATAL_ERROR "Unable to find Vulkan")
-endif(NOT Vulkan_FOUND)
-
-find_package(SDL)
-
-if(NOT SDL_FOUND)
-	message(FATAL_ERROR "Unable to find SDL2")
-endif(NOT SDL_FOUND)
+pkg_check_modules(SDL2 REQUIRED sdl2)
+pkg_check_modules(Vulkan REQUIRED vulkan)
 
 set(SRCS		bgmusic.c
 				snd_codec.c
@@ -116,7 +109,7 @@ endif(DEFINED LINUX_BUILD)
 
 add_executable(engine ${SRCS})
 
-target_include_directories(engine PUBLIC ${SDL_INCLUDE_DIR} ${Vulkan_INCLUDE_DIRS} ${ROOT}/src/shaders/)
+target_include_directories(engine PUBLIC ${SDL2_INCLUDE_DIRS} ${Vulkan_INCLUDE_DIRS} ${ROOT}/src/shaders/)
 target_link_libraries(engine ${Vulkan_LIBRARIES} ${SDL_LIBRARY})
 
 if(DEFINED LINUX_BUILD)
