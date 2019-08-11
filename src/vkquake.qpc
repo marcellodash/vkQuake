@@ -1,43 +1,46 @@
-// TODO: look at other editor projects, like vscode, and clion, and make sure this would work with that
 
 macro PROJECT_NAME "VkQuake"
 
 macro CONFIG "Debug" 	[$DEBUG]
 macro CONFIG "Release" 	[$RELEASE]
 
-macro PLAT_FOLDER "x86" [$WIN32]
-macro PLAT_FOLDER "x64" [$WIN64]
+macro ARCH_FOLDER "x86" 		[$WIN32 || $POSIX32]
+macro ARCH_FOLDER "x64" 		[$WIN64 || $POSIX64]
+
+macro PLAT_FOLDER "win32" 		[$WIN32]
+macro PLAT_FOLDER "win64" 		[$WIN64]
+macro PLAT_FOLDER "linux32" 	[$LINUX32]
+macro PLAT_FOLDER "linux64" 	[$LINUX64]
+macro PLAT_FOLDER "macos" 		[$MACOS]
 
 configuration
 {	
 	general	
 	{
-		out_dir					"Build/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
-		int_dir					"Build_Int/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
+		out_dir		"../game/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
+		int_dir		"engine/$CONFIG/$PLAT_FOLDER"
 		
 		configuration_type		application
 		
 		language c
 		
+		toolset_version "msvc-v142"		[$WINDOWS && $VSTUDIO]
+		toolset_version "gcc"			[$MAKEFILE && $GCC]
+		toolset_version "clang"			[$MAKEFILE && $CLANG]
+		
 		include_directories
 		{
 			"$(VK_SDK_PATH)/Include"	[$VSTUDIO]
-			"../Windows/SDL2/include"
-			"../Windows/codecs/include"
-			"../Windows/misc/include"
-			"common"
-			"engine"
-			"launcher"
-			"libq"
-			"mathlib"
+			"thirdparty/SDL2/include" "thirdparty/codecs/include" "thirdparty/misc/include"
+			"common" "launcher" "engine" "libq" "mathlib" "shaders"
 		}
 		
 		library_directories		[$VSTUDIO]
 		{
-			"$(VK_SDK_PATH)/Lib32"	"../Windows/SDL2/lib/"		[$WIN32]
-			"$(VK_SDK_PATH)/Lib"	"../Windows/SDL2/lib64/"	[$WIN64]
+			"$(VK_SDK_PATH)/Lib32"	"thirdparty/SDL2/lib/"		[$WIN32]
+			"$(VK_SDK_PATH)/Lib"	"thirdparty/SDL2/lib64/"	[$WIN64]
 			
-			"../Windows/codecs/$PLAT_FOLDER/"
+			"thirdparty/codecs/$ARCH_FOLDER/"
 		}
 	}
 	
@@ -74,7 +77,7 @@ configuration
 	
 	linker
 	{		
-		libraries	[$WINDOWS]
+		libraries
 		{
 			"libvorbisfile"		
 			"libvorbis"
@@ -93,17 +96,17 @@ configuration
 			"vulkan-1"
 		}
 		
-		options	[$VSTUDIO]
+		options	[$WINDOWS]
 		{
 			/SUBSYSTEM:WINDOWS
 		}
 	}
 	
-	post_build
+	post_build	[$WINDOWS]
 	{
-		command_line	"copy \"$(SolutionDir)..\Windows\codecs\$PLAT_FOLDER\*.dll\" \"$(TargetDir)\"" "\n" 	[$VSTUDIO]
-		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib\*.dll\" \"$(TargetDir)\""					[$VSTUDIO && $WIN32]
-		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$VSTUDIO && $WIN64]
+		command_line	"copy \"$(SolutionDir)..\Windows\codecs\$ARCH_FOLDER\*.dll\" \"$(TargetDir)\"" "\n" 	
+		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib\*.dll\" \"$(TargetDir)\""						[$WIN32]
+		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$WIN64]
 		
 		use_in_build	"true"
 	}
@@ -328,9 +331,9 @@ files
 		"shaders/showtris.frag"
 	}
 
-	folder "Resource Files"
+	folder "Resource Files"	[$WINDOWS]
 	{
-		"../Windows/vkQuake.rc"	[$WINDOWS]
+		"../Windows/vkQuake.rc"
 	}
 }
 

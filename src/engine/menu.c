@@ -987,12 +987,7 @@ enum
 	OPT_MUSICEXT,
 	OPT_ALWAYRUN,
 	OPT_INVMOUSE,
-	OPT_ALWAYSMLOOK,
 	OPT_LOOKSPRING,
-	OPT_LOOKSTRAFE,
-//#ifdef _WIN32
-//	OPT_USEMOUSE,
-//#endif
 	OPT_VIDEO,	// This is the last before OPTIONS_ITEMS
 	OPTIONS_ITEMS
 };
@@ -1116,19 +1111,8 @@ void M_AdjustSliders (int dir)
 		Cvar_SetValue ("m_pitch", -m_pitch.value);
 		break;
 
-	case OPT_ALWAYSMLOOK:
-		if (in_mlook.state & 1)
-			Cbuf_AddText("-mlook");
-		else
-			Cbuf_AddText("+mlook");
-		break;
-
 	case OPT_LOOKSPRING:	// lookspring
 		Cvar_Set ("lookspring", lookspring.value ? "0" : "1");
-		break;
-
-	case OPT_LOOKSTRAFE:	// lookstrafe
-		Cvar_Set ("lookstrafe", lookstrafe.value ? "0" : "1");
 		break;
 	}
 }
@@ -1238,17 +1222,9 @@ void M_Options_Draw (void)
 	M_Print (16, 32 + 8*OPT_INVMOUSE,	"          Invert Mouse");
 	M_DrawCheckbox (220, 32 + 8*OPT_INVMOUSE, m_pitch.value < 0);
 
-	// OPT_ALWAYSMLOOK:
-	M_Print (16, 32 + 8*OPT_ALWAYSMLOOK,	"            Mouse Look");
-	M_DrawCheckbox (220, 32 + 8*OPT_ALWAYSMLOOK, in_mlook.state & 1);
-
 	// OPT_LOOKSPRING:
 	M_Print (16, 32 + 8*OPT_LOOKSPRING,	"            Lookspring");
 	M_DrawCheckbox (220, 32 + 8*OPT_LOOKSPRING, lookspring.value);
-
-	// OPT_LOOKSTRAFE:
-	M_Print (16, 32 + 8*OPT_LOOKSTRAFE,	"            Lookstrafe");
-	M_DrawCheckbox (220, 32 + 8*OPT_LOOKSTRAFE, lookstrafe.value);
 
 	// OPT_VIDEO:
 	if (vid_menudrawfn)

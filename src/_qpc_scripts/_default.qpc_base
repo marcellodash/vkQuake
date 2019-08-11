@@ -2,16 +2,6 @@
 //	Base Configuration File for QPC
 //-----------------------------------------------------------------------------
 
-// Conditionals you can enable on the Command Line with '/option'
-cmd_conditionals
-{
-	//MSVC
-	//GCC
-	//CLANG
-}
-
-macro "ROOTDIR" "$ROOTDIR/../.."
-
 configurations
 {
 	Debug

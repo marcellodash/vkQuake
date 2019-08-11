@@ -92,6 +92,7 @@ static cvar_t	vid_refreshrate = {"vid_refreshrate", "60", CVAR_ARCHIVE};
 static cvar_t	vid_vsync = {"vid_vsync", "0", CVAR_ARCHIVE};
 static cvar_t	vid_desktopfullscreen = {"vid_desktopfullscreen", "0", CVAR_ARCHIVE}; // QuakeSpasm
 static cvar_t	vid_borderless = {"vid_borderless", "0", CVAR_ARCHIVE}; // QuakeSpasm
+static cvar_t	vid_resize = {"vid_resize", "1", CVAR_ARCHIVE}; // Demez
 cvar_t	vid_filter = {"vid_filter", "0", CVAR_ARCHIVE};
 cvar_t	vid_anisotropic = {"vid_anisotropic", "0", CVAR_ARCHIVE};
 cvar_t vid_fsaa = {"vid_fsaa", "0", CVAR_ARCHIVE};
@@ -405,6 +406,9 @@ static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qb
 	{
 		flags = SDL_WINDOW_HIDDEN | SDL_WINDOW_VULKAN;
 
+		if (vid_resize.value)
+			flags |= SDL_WINDOW_RESIZABLE;
+
 		if (vid_borderless.value)
 			flags |= SDL_WINDOW_BORDERLESS;
 		
@@ -431,13 +435,18 @@ static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qb
 	}
 
 	/* Set window size and display mode */
-	SDL_SetWindowSize (draw_context, width, height);
-	if (previous_display >= 0)
-		SDL_SetWindowPosition (draw_context, SDL_WINDOWPOS_CENTERED_DISPLAY(previous_display), SDL_WINDOWPOS_CENTERED_DISPLAY(previous_display));
-	else
-		SDL_SetWindowPosition(draw_context, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	if ( !vid_resize.value )
+	{
+		SDL_SetWindowSize (draw_context, width, height);
+		if (previous_display >= 0)
+			SDL_SetWindowPosition (draw_context, SDL_WINDOWPOS_CENTERED_DISPLAY(previous_display), SDL_WINDOWPOS_CENTERED_DISPLAY(previous_display));
+		else
+			SDL_SetWindowPosition(draw_context, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	}
+
 	SDL_SetWindowDisplayMode (draw_context, VID_SDL2_GetDisplayMode(width, height, refreshrate, bpp));
 	SDL_SetWindowBordered (draw_context, vid_borderless.value ? SDL_FALSE : SDL_TRUE);
+	SDL_SetWindowResizable (draw_context, vid_resize.value ? SDL_TRUE : SDL_FALSE );
 
 	/* Make window fullscreen if needed, and show the window */
 
@@ -2142,7 +2151,8 @@ void	VID_Init (void)
 					 "vid_desktopfullscreen",
 					 "vid_fsaamode",
 					 "vid_fsaa",
-					 "vid_borderless"};
+					 "vid_borderless",
+					 "vid_resize"};
 #define num_readvars	( sizeof(read_vars)/sizeof(read_vars[0]) )
 
 	Cvar_RegisterVariable (&vid_fullscreen); //johnfitz
@@ -2157,6 +2167,7 @@ void	VID_Init (void)
 	Cvar_RegisterVariable (&vid_fsaa);
 	Cvar_RegisterVariable (&vid_desktopfullscreen); //QuakeSpasm
 	Cvar_RegisterVariable (&vid_borderless); //QuakeSpasm
+	Cvar_RegisterVariable (&vid_resize); // Demez
 	Cvar_SetCallback (&vid_fullscreen, VID_Changed_f);
 	Cvar_SetCallback (&vid_width, VID_Changed_f);
 	Cvar_SetCallback (&vid_height, VID_Changed_f);
@@ -2169,6 +2180,7 @@ void	VID_Init (void)
 	Cvar_SetCallback (&vid_vsync, VID_Changed_f);
 	Cvar_SetCallback (&vid_desktopfullscreen, VID_Changed_f);
 	Cvar_SetCallback (&vid_borderless, VID_Changed_f);
+	Cvar_SetCallback (&vid_resize, VID_Changed_f); // Demez
 	
 	Cmd_AddCommand ("vid_unlock", VID_Unlock); //johnfitz
 	Cmd_AddCommand ("vid_restart", VID_Restart); //johnfitz

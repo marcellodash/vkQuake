@@ -89,7 +89,7 @@ cvar_t		scr_clock = {"scr_clock", "0", CVAR_NONE};
 //johnfitz
 
 cvar_t		scr_viewsize = {"viewsize","100", CVAR_ARCHIVE};
-cvar_t		scr_fov = {"fov","90",CVAR_NONE};	// 10 - 170
+cvar_t		scr_fov = {"fov","90",CVAR_ARCHIVE };	// 10 - 170
 cvar_t		scr_fov_adapt = {"fov_adapt","1",CVAR_ARCHIVE};
 cvar_t		scr_conspeed = {"scr_conspeed","500",CVAR_ARCHIVE};
 cvar_t		scr_centertime = {"scr_centertime","2",CVAR_NONE};
@@ -455,8 +455,8 @@ void SCR_DrawFPS (void)
 		oldframecount = r_framecount;
 		return;
 	}
-	// update value every 3/4 second
-	if (elapsed_time > 0.75)
+	// update value every 1/8 second
+	if ( elapsed_time > 0.125 )
 	{
 		lastfps = frames / elapsed_time;
 		oldtime = realtime;
