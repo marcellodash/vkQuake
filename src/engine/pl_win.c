@@ -21,6 +21,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifdef _WIN32
+
 #include "quakedef.h"
 #include <windows.h>
 #if defined(SDL_FRAMEWORK) || defined(NO_SDL_CONFIG)
@@ -100,3 +102,4 @@ void PL_ErrorDialog(const char *errorMsg)
 			MB_OK | MB_SETFOREGROUND | MB_ICONSTOP);
 }
 
+#endif //_WIN32
