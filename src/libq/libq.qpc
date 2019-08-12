@@ -1,92 +1,24 @@
 
 macro PROJECT_NAME "libq"
+macro SRC_DIR ".."
 
-macro CONFIG "Debug" 	[$DEBUG]
-macro CONFIG "Release" 	[$RELEASE]
-
-macro ARCH_FOLDER "x86" 		[$WIN32 || $POSIX32]
-macro ARCH_FOLDER "x64" 		[$WIN64 || $POSIX64]
-
-macro PLAT_FOLDER "win32" 		[$WIN32]
-macro PLAT_FOLDER "win64" 		[$WIN64]
-macro PLAT_FOLDER "linux32" 	[$LINUX32]
-macro PLAT_FOLDER "linux64" 	[$LINUX64]
-macro PLAT_FOLDER "macos" 		[$MACOS]
+include "$SRC_DIR/_qpc_scripts/base_common.qpc"
 
 configuration
 {	
 	general	
 	{
-		out_dir		"../game/$PROJECT_NAME/$PLAT_FOLDER/$CONFIG/"
-		int_dir		"libq/$CONFIG/$PLAT_FOLDER"
-		
-		configuration_type		dynamic_library
-		
+		configuration_type	dynamic_library
 		language cpp
-		
-		toolset_version "msvc-v142"		[$WINDOWS && $VSTUDIO]
-		toolset_version "gcc"			[$MAKEFILE && $GCC]
-		toolset_version "clang"			[$MAKEFILE && $CLANG]
-		
-		include_directories
-		{
-			"$(VK_SDK_PATH)/Include"	[$VSTUDIO]
-			"thirdparty/SDL2/include" "thirdparty/codecs/include" "thirdparty/misc/include"
-			"common" "launcher" "engine" "libq" "mathlib" "shaders"
-		}
-		
-		library_directories		[$VSTUDIO]
-		{
-		}
-	}
-	
-	compiler
-	{		
-		preprocessor_definitions
-		{
-			WIN32 _WINDOWS	[$WINDOWS]
-			LINUX _LINUX [$LINUX]
-			_DEBUG	[$DEBUG]
-			NDEBUG	[$RELEASE]
-		}
-		
-		options	[$VSTUDIO]
-		{
-			/Od /MDd /ZI /RTC1	[$DEBUG]
-			/O2 /MD /Zi			[$RELEASE]
-			/TC /W3
-		}
 	}
 	
 	linker
 	{		
-		libraries [$WINDOWS]
+		libraries 
 		{
-			"ws2_32"
-			"winmm"
+			"ws2_32" "winmm"		[$WINDOWS]
+			"pthread" "dl" "m" "c"	[$LINUX]
 		}
-		
-		libraries [$LINUX]
-		{
-			"pthread"
-			"dl"
-			"m"
-			"c"
-		}
-		
-		options	[$WINDOWS]
-		{
-			/SUBSYSTEM:WINDOWS
-		}
-	}
-	
-	post_build	[$WINDOWS]
-	{
-		command_line	"copy \"$(SolutionDir)..\Windows\codecs\$ARCH_FOLDER\*.dll\" \"$(TargetDir)\"" "\n" 	
-		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib\*.dll\" \"$(TargetDir)\""						[$WIN32]
-		command_line	"copy \"$(SolutionDir)..\Windows\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$WIN64]
-		
-		use_in_build	"true"
 	}
 }
 
@@ -104,5 +36,3 @@ files
 		"filesystem.cpp"
 	}
 }
-
-
