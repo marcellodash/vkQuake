@@ -14,7 +14,7 @@ Rather than using static libraries, this just gets included into a translation u
 
 #include <immintrin.h>
 
-#ifdef POSIX
+#ifdef _LINUX
 #include <x86intrin.h>
 #include <unistd.h>
 #endif
