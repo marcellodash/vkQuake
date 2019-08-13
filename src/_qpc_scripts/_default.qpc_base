@@ -23,9 +23,20 @@ project "mathlib"
 	"mathlib/mathlib.qpc"
 }
 
+project "launcher"
+{
+	"launcher/launcher.qpc"
+}
+
+/*project "libq_test"
+{
+	"unittests/libq_test/libq_test.qpc"
+}*/
+
 group "everything"
 {
 	"vkquake"
 	"libq"
 	"mathlib"
+	"launcher"
 }
