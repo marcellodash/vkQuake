@@ -137,6 +137,7 @@ enum class EMutexStatus
 
 /*
 Mutex that doesnt rely on the OS mutex things
+Uses interlocked exchange and the like
 */
 class CFastMutex
 {
@@ -174,6 +175,12 @@ Simple mutex class
 */
 class CMutex
 {
+private:
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	pthread_mutex_t mutex;
+#endif
 public:
 	CMutex();
 
@@ -181,11 +188,13 @@ public:
 public:
 	//-----------------------------------------------------//
 	// Lock the mutex, blocks until locked
+	// Returns 1 is all is OK, 0 otherwise
 	//-----------------------------------------------------//
 	int Lock();
 
 	//-----------------------------------------------------//
 	// Try to lock mutex, does not block
+	// Returns 1 if locked, 0 if not
 	//-----------------------------------------------------//
 	int TryLock();
 
@@ -193,11 +202,6 @@ public:
 	// Unlock the mutex
 	//-----------------------------------------------------//
 	void Unlock();
-
-	//-----------------------------------------------------//
-	// Destroy the mutex
-	//-----------------------------------------------------//
-	void Destroy();
 };
 
 /*
@@ -205,6 +209,8 @@ Mutex that multiple threads can lock
 */
 class CSharedMutex
 {
+private:
+	std::atomic<int> m_nThreads;
 public:
 	//-----------------------------------------------------//
 	// Create a new shared mutex with x max owning threads
@@ -214,24 +220,14 @@ public:
 	~CSharedMutex();
 public:
 	//-----------------------------------------------------//
-	// Lock the mutex, blocks until locked
+	// Lock the mutex, does not block
 	//-----------------------------------------------------//
 	int Lock();
-
-	//-----------------------------------------------------//
-	// Try to lock mutex, does not block
-	//-----------------------------------------------------//
-	int TryLock();
 
 	//-----------------------------------------------------//
 	// Unlock the mutex
 	//-----------------------------------------------------//
 	void Unlock();
-
-	//-----------------------------------------------------//
-	// Destroy the mutex
-	//-----------------------------------------------------//
-	void Destroy();
 };
 
 /*

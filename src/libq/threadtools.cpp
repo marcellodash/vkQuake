@@ -194,3 +194,83 @@ int CThread::GetReturnCode() const
 {
 	return m_nReturn;
 }
+
+//===========================================================//
+// 
+// CMutex
+//
+//===========================================================//
+CMutex::CMutex()
+{
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	pthread_mutex_init(&this->mutex, NULL);
+#endif
+}
+
+CMutex::~CMutex()
+{
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	pthread_mutex_destroy(&this->mutex);
+#endif
+}
+
+int CMutex::Lock()
+{
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	return pthread_mutex_lock(&this->mutex) == 0;
+#endif
+}
+
+int CMutex::TryLock()
+{
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	return pthread_mutex_trylock(&this->mutex) == 0;
+#endif
+}
+
+void CMutex::Unlock()
+{
+#ifdef _WIN32
+
+#elif defined(_LINUX)
+	pthread_mutex_unlock(&this->mutex);
+#endif
+}
+
+//===========================================================//
+// 
+// CSharedMutex
+//
+//===========================================================//
+CSharedMutex::CSharedMutex(int max)
+{
+	std::atomic_store<int>(&this->m_nThreads, max);
+}
+
+CSharedMutex::~CSharedMutex()
+{
+}
+
+int CSharedMutex::Lock()
+{
+	int val = std::atomic_load<int>(&this->m_nThreads) - 1;
+	int orig = val+1;
+	if(std::atomic_compare_exchange_weak<int>(&this->m_nThreads, &orig, val))
+	{
+		return 1;
+	}
+	return 0;
+}
+
+void CSharedMutex::Unlock()
+{
+	std::atomic_fetch_add<int>(&this->m_nThreads, 1);
+}
