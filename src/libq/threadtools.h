@@ -14,11 +14,18 @@
 #include <semaphore.h>
 #endif
 
+#ifdef __cplusplus
+/* C++ includes */
+#include <atomic>
+#endif //__cplusplus
+
 /* Simple thread proc */
 typedef int(*ThreadProc_t)(void* param);
 
+#ifdef __cplusplus
 extern "C"
 {
+#endif //__cplusplus
 
 #ifdef _LINUX
 typedef pthread_mutex_t mutex_t;
@@ -51,8 +58,9 @@ void thread_kill(thread_t* thread);
 
 int thread_getreturn(thread_t* thread);
 
+#ifdef __cplusplus
 }
-
+#endif //__cplusplus
 
 #ifdef __cplusplus
 
