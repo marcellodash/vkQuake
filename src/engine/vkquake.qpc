@@ -127,7 +127,9 @@ files
 		"net_dgrm.c"
 		"net_loop.c"
 		"net_main.c"
-		"net_win.c"
+		"net_win.c"		[$WINDOWS]	// probably idk
+		"net_bsd.c"		[$POSIX]	// idk 
+		"net_udp.c"		[$POSIX]	// aaaaaaaaaaaaaaaaa
 		"net_wins.c"
 		"net_wipx.c"
 		
