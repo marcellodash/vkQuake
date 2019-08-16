@@ -18,6 +18,11 @@ configuration
 			
 			"$SRC_DIR/thirdparty/codecs/$ARCH_FOLDER/"
 		}
+
+		include_directories
+		{
+			"/usr/include/SDL2"		[$LINUX]
+		}
 	}
 	
 	compiler
@@ -43,21 +48,33 @@ configuration
 	{		
 		libraries
 		{
-			"libvorbisfile"		
-			"libvorbis"
-			"libopusfile"
-			"libopus"
-			"libFLAC"
-			"libogg"
-			"libmad"
-			"libmikmod"
-			"ws2_32"
-			"winmm"
+			"libvorbisfile"	[$WINDOWS]
+			"vorbisfile"	[$LINUX]
+			"libvorbis"		[$WINDOWS]
+			"vorbis"	[$LINUX]
+			"libopusfile"	[$WINDOWS]
+			"opusfile"	[$LINUX]
+			"libopus"	[$WINDOWS]
+			"opus"		[$LINUX]
+			"libFLAC"	[$WINDOWS]
+			"FLAC"		[$LINUX]
+			"libogg"	[$WINDOWS]
+			"ogg"		[$LINUX]
+			"libmad"	[$WINDOWS]
+			"mad"		[$LINUX]
+			"libmikmod"	[$WINDOWS]
+			"mikmod"	[$LINUX]
+			"ws2_32"	[$WINDOWS]
+			"winmm"		[$WINDOWS]
 			
 			"SDL2"
 			"SDL2main"
 			
-			"vulkan-1"
+			"vulkan-1"	[$WINDOWS]
+			"vulkan"	[$LINUX]
+
+			"m"	[$LINUX]
+			"c" [$LINUX]
 		}
 	}
 	
@@ -173,14 +190,17 @@ files
 		"main_sdl.c"
 		"mathlib.c"
 		"menu.c"
-		"pl_win.c"
+		"pl_win.c"		[$WINDOWS]
+		"pl_linux.c"	[$LINUX]
+		"pl_osx.c"		[$MACOS]
 		"pr_cmds.c"
 		"pr_edict.c"
 		"pr_exec.c"
 		"sbar.c"
 		"strlcat.c"
 		"strlcpy.c"
-		"sys_sdl_win.c"
+		"sys_sdl_win.c"		[$WINDOWS]
+		"sys_sdl_unix.c"	[$POSIX]
 		"view.c"
 		"wad.c"
 		"world.c"
