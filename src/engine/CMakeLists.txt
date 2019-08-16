@@ -109,7 +109,7 @@ endif(DEFINED LINUX_BUILD)
 
 add_executable(engine ${SRCS})
 
-target_include_directories(engine PUBLIC ${SDL2_INCLUDE_DIRS} ${Vulkan_INCLUDE_DIRS} ${ROOT}/src/shaders/)
+target_include_directories(engine PUBLIC ${SDL2_INCLUDE_DIRS} ${Vulkan_INCLUDE_DIRS} ${ROOT}/src/shaders/ ${ROOT}/src/libq ${ROOT}/src/mathlib ${ROOT}/src/)
 target_link_libraries(engine ${Vulkan_LIBRARIES} ${SDL2_LIBRARIES})
 
 if(DEFINED LINUX_BUILD)
