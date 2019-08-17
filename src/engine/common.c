@@ -31,7 +31,6 @@ static char	argvdummy[] = " ";
 
 int		safemode;
 
-cvar_t	registered = {"registered","1",CVAR_ROM}; /* set to correct value in COM_CheckRegistered() */
 cvar_t	cmdline = {"cmdline","",CVAR_ROM/*|CVAR_SERVERINFO*/}; /* sending cmdline upon CCREQ_RULE_INFO is evil */
 
 static qboolean		com_modified;	// set true if using non-id files
@@ -1266,57 +1265,6 @@ int COM_CheckParm (const char *parm)
 	return 0;
 }
 
-/*
-================
-COM_CheckRegistered
-
-Looks for the pop.txt file and verifies it.
-Sets the "registered" cvar.
-Immediately exits out if an alternate game was attempted to be started without
-being registered.
-================
-*/
-static void COM_CheckRegistered (void)
-{
-	int		h;
-	unsigned short	check[128];
-	int		i;
-
-	COM_OpenFile("gfx/pop.lmp", &h, NULL);
-
-	if (h == -1)
-	{
-		Cvar_SetROM ("registered", "0");
-		Con_Printf ("Playing shareware version.\n");
-		if (com_modified)
-			Sys_Error ("You must have the registered version to use modified games.\n\n"
-				   "Basedir is: %s\n\n"
-				   "Check that this has an " GAMENAME " subdirectory containing pak0.pak and pak1.pak, "
-				   "or use the -basedir command-line option to specify another directory.",
-				   com_basedir);
-		return;
-	}
-
-	Sys_FileRead (h, check, sizeof(check));
-	COM_CloseFile (h);
-
-	for (i = 0; i < 128; i++)
-	{
-		if (pop[i] != (unsigned short)BigShort (check[i]))
-			Sys_Error ("Corrupted data file.");
-	}
-
-	for (i = 0; com_cmdline[i]; i++)
-	{
-		if (com_cmdline[i]!= ' ')
-			break;
-	}
-
-	Cvar_SetROM ("cmdline", &com_cmdline[i]);
-	Cvar_SetROM ("registered", "1");
-	Con_Printf ("Playing registered version.\n");
-}
-
 
 /*
 ================
@@ -1655,12 +1603,6 @@ static int COM_FindFile (const char *filename, int *handle, FILE **file,
 		}
 		else	/* check a file in the directory tree */
 		{
-			if (!registered.value)
-			{ /* if not a registered version, don't ever go beyond base */
-				if ( strchr (filename, '/') || strchr (filename,'\\'))
-					continue;
-			}
-
 			q_snprintf (netpath, sizeof(netpath), "%s/%s",search->filename, filename);
 			findtime = Sys_FileTime (netpath);
 			if (findtime == -1)
@@ -2095,12 +2037,6 @@ static void COM_Game_f (void)
 		const char *p2 = Cmd_Argv(2);
 		searchpath_t *search;
 
-		if (!registered.value) //disable shareware quake
-		{
-			Con_Printf("You must have the registered version to use modified games\n");
-			return;
-		}
-
 		if (!*p || !strcmp(p, ".") || strstr(p, "..") || strstr(p, "/") || strstr(p, "\\") || strstr(p, ":"))
 		{
 			Con_Printf ("gamedir should be a single directory name, not a path\n");
@@ -2229,7 +2165,6 @@ void COM_InitFilesystem (void) //johnfitz -- modified based on topaz's tutorial
 {
 	int i, j;
 
-	Cvar_RegisterVariable (&registered);
 	Cvar_RegisterVariable (&cmdline);
 	Cmd_AddCommand ("path", COM_Path_f);
 	Cmd_AddCommand ("game", COM_Game_f); //johnfitz
@@ -2290,8 +2225,6 @@ void COM_InitFilesystem (void) //johnfitz -- modified based on topaz's tutorial
 
 	if (COM_CheckParm ("-validation"))
 		vulkan_globals.validation = true;
-
-	COM_CheckRegistered ();
 }
 
 
