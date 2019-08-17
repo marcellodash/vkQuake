@@ -19,6 +19,14 @@ configuration
 			"pthread" "dl" "m" "c"	[$LINUX]
 		}
 	}
+	
+	compiler
+	{
+		preprocessor_definitions
+		{
+			"USE_LIBQ_AS_HEADER_ONLY"
+		}
+	}
 }
 
 files

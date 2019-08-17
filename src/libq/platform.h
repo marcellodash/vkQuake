@@ -5,6 +5,8 @@
 //===========================================================//
 #pragma once
 
+/* Enable USE_LIBQ_AS_HEADER_ONLY if you only want these definitions */
+
 /* some c standard includes that must be here */
 #include <stddef.h>
 #include <stdint.h>
@@ -12,18 +14,19 @@
 
 #ifdef _WIN32
 
-#define FORCEINLINE __forceinline
-#define INLINE inline
-#define DLL_EXPORT __declspec(dllexport)
-#define DLL_IMPORT __declspec(dllimport)
-#define FORCE_EMIT		__attribute__((used)) /* Used to force emit a variable even if unused */
-#define VECTOR(x)		__attribute__((vector_size(x)))
+#define FORCEINLINE 	__forceinline
+#define INLINE 			inline
+#define DLL_EXPORT		__declspec(dllexport)
+#define DLL_IMPORT 		__declspec(dllimport)
+#define FORCE_EMIT		------- /* IMPLEMENT ME */
+#define VECTOR(x)		------- /* IMPLEMENT ME */
 #define VECTOR2			VECTOR(2)
 #define VECTOR4			VECTOR(4)
 #define VECTOR8			VECTOR(8)
 #define VECTOR16		VECTOR(16)
 #define VECTOR32		VECTOR(32)
 #define VECTOR64		VECTOR(64)
+#define ALIGN(x)		__declspec(align(x))
 
 #elif defined(__GNUC__)
 
@@ -39,10 +42,11 @@
 #define VECTOR16		VECTOR(16)
 #define VECTOR32		VECTOR(32)
 #define VECTOR64		VECTOR(64)
+#define PACKED			__attribute__((packed))
+#define ALIGN(x)		__attribute__((aligned(x)))
 
 #endif
 
-#define ALIGN(x)		alignas(x)
 #define ALIGN2			ALIGN(2)
 #define ALIGN4			ALIGN(4)
 #define ALIGN8			ALIGN(8)
@@ -88,7 +92,14 @@ typedef long double	f80;
 #define TRUE	1
 #define FALSE	0
 
+/* class "specifiers" */
+#define static_class class
+#define abstract_class class
+#define interface class
+
 typedef void* HANDLE;
+
+#ifndef USE_LIBQ_AS_HEADER_ONLY
 
 //-------------------------------------------------------//
 // Load library and return handle
@@ -104,3 +115,5 @@ HANDLE DLL_EXPORT Plat_FindSymbol(HANDLE lib, const char* sym);
 // Closes a library
 //-------------------------------------------------------//
 void DLL_EXPORT Plat_CloseLibrary(HANDLE lib);
+
+#endif //USE_LIBQ_AS_HEADER_ONLY
