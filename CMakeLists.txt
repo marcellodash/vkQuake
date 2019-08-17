@@ -52,6 +52,7 @@ if(NOT UNIX_CROSS AND ${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 	set(SDL2_PATHS		)
 	set(VORBIS_PATHS 	)
 	set(OPUS_PATHS 		)
+	include_directories(/usr/include/x86_64-linux-gnu)
 endif(NOT UNIX_CROSS AND ${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
 if(${CMAKE_SYSTEM_NAME} EQUAL "Windows" OR ${UNIX_CROSS})

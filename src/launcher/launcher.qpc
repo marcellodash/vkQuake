@@ -1,0 +1,28 @@
+macro PROJECT_NAME "launcher"
+macro SRC_DIR ".."
+
+include "$SRC_DIR/_qpc_scripts/base_common.qpc"
+
+configuration
+{	
+	general	
+	{
+		configuration_type	application
+		language cpp
+	}
+	
+	linker
+	{		
+		libraries 
+		{
+			"ws2_32" "winmm"		[$WINDOWS]
+		//	"pthread" "dl" "m" "c"	[$LINUX]
+			"libq"
+		}
+	}
+}
+
+files
+{
+	"launcher.cpp"
+}

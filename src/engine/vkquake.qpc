@@ -4,6 +4,9 @@ macro SRC_DIR ".."
 
 include "$SRC_DIR/_qpc_scripts/base_common.qpc"
 
+macro LIB	"lib"	[$WINDOWS]
+macro LIB	""		[$POSIX]
+
 configuration
 {	
 	general	
@@ -13,10 +16,15 @@ configuration
 		
 		library_directories		[$VSTUDIO]
 		{
-			"$(VK_SDK_PATH)/Lib32"	"$SRC_DIR/thirdparty/SDL2/lib/"	[$WIN32]
+			"$(VK_SDK_PATH)/Lib32"	"$SRC_DIR/thirdparty/SDL2/lib/"		[$WIN32]
 			"$(VK_SDK_PATH)/Lib"	"$SRC_DIR/thirdparty/SDL2/lib64/"	[$WIN64]
 			
 			"$SRC_DIR/thirdparty/codecs/$ARCH_FOLDER/"
+		}
+
+		include_directories
+		{
+			"/usr/include/SDL2"		[$LINUX]
 		}
 	}
 	
@@ -43,21 +51,23 @@ configuration
 	{		
 		libraries
 		{
-			"libvorbisfile"		
-			"libvorbis"
-			"libopusfile"
-			"libopus"
-			"libFLAC"
-			"libogg"
-			"libmad"
-			"libmikmod"
-			"ws2_32"
-			"winmm"
+			"$LIBvorbisfile"
+			"$LIBvorbis"
+			"$LIBopusfile"
+			"$LIBopus"
+			"$LIBFLAC"
+			"$LIBogg"
+			"$LIBmad"
+			"$LIBmikmod"
 			
 			"SDL2"
 			"SDL2main"
 			
-			"vulkan-1"
+			"vulkan-1"	[$WINDOWS]
+			"vulkan"	[$LINUX]
+
+			"ws2_32"	"winmm"		[$WINDOWS]
+			"m"			"c"			[$LINUX]
 		}
 	}
 	
@@ -110,7 +120,9 @@ files
 		"net_dgrm.c"
 		"net_loop.c"
 		"net_main.c"
-		"net_win.c"
+		"net_win.c"		[$WINDOWS]
+		"net_bsd.c"		[$POSIX]
+		"net_udp.c"		[$POSIX]
 		"net_wins.c"
 		"net_wipx.c"
 		
@@ -173,14 +185,17 @@ files
 		"main_sdl.c"
 		"mathlib.c"
 		"menu.c"
-		"pl_win.c"
+		"pl_win.c"		[$WINDOWS]
+		"pl_linux.c"	[$LINUX]
+		"pl_osx.c"		[$MACOS]
 		"pr_cmds.c"
 		"pr_edict.c"
 		"pr_exec.c"
 		"sbar.c"
 		"strlcat.c"
 		"strlcpy.c"
-		"sys_sdl_win.c"
+		"sys_sdl_win.c"		[$WINDOWS]
+		"sys_sdl_unix.c"	[$POSIX]
 		"view.c"
 		"wad.c"
 		"world.c"

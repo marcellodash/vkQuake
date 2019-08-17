@@ -24,7 +24,7 @@ configuration
 
 files
 {
-	folder "Threading"
+	folder "Threading"	[$LINUX]
 	{
 		"threadtools.h"
 		"threadtools.cpp"
