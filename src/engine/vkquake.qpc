@@ -4,6 +4,9 @@ macro SRC_DIR ".."
 
 include "$SRC_DIR/_qpc_scripts/base_common.qpc"
 
+macro LIB	"lib"	[$WINDOWS]
+macro LIB	""		[$POSIX]
+
 configuration
 {	
 	general	
@@ -13,7 +16,7 @@ configuration
 		
 		library_directories		[$VSTUDIO]
 		{
-			"$(VK_SDK_PATH)/Lib32"	"$SRC_DIR/thirdparty/SDL2/lib/"	[$WIN32]
+			"$(VK_SDK_PATH)/Lib32"	"$SRC_DIR/thirdparty/SDL2/lib/"		[$WIN32]
 			"$(VK_SDK_PATH)/Lib"	"$SRC_DIR/thirdparty/SDL2/lib64/"	[$WIN64]
 			
 			"$SRC_DIR/thirdparty/codecs/$ARCH_FOLDER/"
@@ -48,24 +51,14 @@ configuration
 	{		
 		libraries
 		{
-			"libvorbisfile"	[$WINDOWS]
-			"vorbisfile"	[$LINUX]
-			"libvorbis"		[$WINDOWS]
-			"vorbis"	[$LINUX]
-			"libopusfile"	[$WINDOWS]
-			"opusfile"	[$LINUX]
-			"libopus"	[$WINDOWS]
-			"opus"		[$LINUX]
-			"libFLAC"	[$WINDOWS]
-			"FLAC"		[$LINUX]
-			"libogg"	[$WINDOWS]
-			"ogg"		[$LINUX]
-			"libmad"	[$WINDOWS]
-			"mad"		[$LINUX]
-			"libmikmod"	[$WINDOWS]
-			"mikmod"	[$LINUX]
-			"ws2_32"	[$WINDOWS]
-			"winmm"		[$WINDOWS]
+			"$LIBvorbisfile"
+			"$LIBvorbis"
+			"$LIBopusfile"
+			"$LIBopus"
+			"$LIBFLAC"
+			"$LIBogg"
+			"$LIBmad"
+			"$LIBmikmod"
 			
 			"SDL2"
 			"SDL2main"
@@ -73,8 +66,8 @@ configuration
 			"vulkan-1"	[$WINDOWS]
 			"vulkan"	[$LINUX]
 
-			"m"	[$LINUX]
-			"c" [$LINUX]
+			"ws2_32"	"winmm"		[$WINDOWS]
+			"m"			"c"			[$LINUX]
 		}
 	}
 	
@@ -127,9 +120,9 @@ files
 		"net_dgrm.c"
 		"net_loop.c"
 		"net_main.c"
-		"net_win.c"		[$WINDOWS]	// probably idk
-		"net_bsd.c"		[$POSIX]	// idk 
-		"net_udp.c"		[$POSIX]	// aaaaaaaaaaaaaaaaa
+		"net_win.c"		[$WINDOWS]
+		"net_bsd.c"		[$POSIX]
+		"net_udp.c"		[$POSIX]
 		"net_wins.c"
 		"net_wipx.c"
 		
