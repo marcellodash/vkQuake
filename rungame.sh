@@ -1,3 +1,5 @@
+export QUAKEDIR="./game"
+
 if [ -z $QUAKEDIR ]; then
 	echo "ERROR: Please set QUAKEDIR to your quake install directory"
 	exit

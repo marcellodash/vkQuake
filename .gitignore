@@ -44,3 +44,7 @@ bin/
 lib/
 
 \.vscode/
+.kdev4/
+*.swp
+*.kdev4
+game/

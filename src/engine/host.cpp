@@ -246,7 +246,7 @@ void Host_Version_f (void)
 	Con_Printf ("Quake Version %1.2f\n", VERSION);
 	Con_Printf ("QuakeSpasm Version " QUAKESPASM_VER_STRING "\n");
 	Con_Printf ("vkQuake Version " VKQUAKE_VER_STRING "\n");
-	Con_Printf ("Exe: "__TIME__" "__DATE__"\n");
+	Con_Printf ("Exe: " __TIME__ " " __DATE__ "\n");
 }
 
 /* cvar callback functions : */
@@ -614,7 +614,7 @@ void Host_GetConsoleCommands (void)
 {
 	const char	*cmd;
 
-	if (!isDedicated)
+	if (!isDedicated && !isDevMode)
 		return;	// no stdin necessary in graphical mode
 
 	while (1)

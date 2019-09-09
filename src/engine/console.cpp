@@ -240,6 +240,36 @@ static void Con_MessageMode2_f (void)
 	key_dest = key_message;
 }
 
+/*
+================
+Con_ListCommands_f
+================
+*/
+static void Con_ListCommands_f(void)
+{
+	for(const char* cmd = Cmd_FirstCommand(); cmd; cmd = Cmd_NextCommand())
+		Con_Printf("\t%s\n", cmd);
+}
+
+/*
+================
+Con_ToggleDevMode_f
+Toggles developer mode
+================
+*/
+static void Con_ToggleDevMode_f(void)
+{
+	if(isDevMode) 
+	{
+		isDevMode = 0;
+		Con_Printf("Developer mode DISABLED.\n");
+	}
+	else
+	{
+		isDevMode = 1;
+		Con_Printf("Developer mode ENABLED.\n");
+	}
+}
 
 /*
 ================
@@ -329,12 +359,14 @@ void Con_Init (void)
 
 	Cvar_RegisterVariable (&con_notifytime);
 	Cvar_RegisterVariable (&con_logcenterprint); //johnfitz
-
+	
 	Cmd_AddCommand ("toggleconsole", Con_ToggleConsole_f);
 	Cmd_AddCommand ("messagemode", Con_MessageMode_f);
 	Cmd_AddCommand ("messagemode2", Con_MessageMode2_f);
 	Cmd_AddCommand ("clear", Con_Clear_f);
 	Cmd_AddCommand ("condump", Con_Dump_f); //johnfitz
+	Cmd_AddCommand ("listcmd", Con_ListCommands_f);
+	Cmd_AddCommand ("toggledev", Con_ToggleDevMode_f);
 	con_initialized = true;
 }
 
