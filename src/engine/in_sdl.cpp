@@ -737,6 +737,11 @@ void IN_SendKeyEvents (void)
 				S_UnblockSound();
 			else if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
 				S_BlockSound();
+			else if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+			{
+				VID_SetWindowSize(event.window.data1, event.window.data2);
+				Con_Printf("Window resized to: %ix%i\n", event.window.data1, event.window.data2);
+			}
 			break;
 		case SDL_TEXTINPUT:
 			if (in_debugkeys.value)

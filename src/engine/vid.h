@@ -87,5 +87,7 @@ qboolean VID_HasMouseOrInputFocus (void);
 qboolean VID_IsMinimized (void);
 void	VID_Lock (void);
 
+void VID_SetWindowSize(int w, int h);
+
 #endif	/* __VID_DEFS_H */
 
