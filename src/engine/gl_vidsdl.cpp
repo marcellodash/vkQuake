@@ -406,8 +406,10 @@ static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qb
 	{
 		flags = SDL_WINDOW_HIDDEN | SDL_WINDOW_VULKAN;
 
-		if (vid_resize.value)
-			flags |= SDL_WINDOW_RESIZABLE;
+		/* Disable until fixed */
+		//if (vid_resize.value)
+		//	flags |= SDL_WINDOW_RESIZABLE;
+		flags ^= SDL_WINDOW_RESIZABLE;
 
 		if (vid_borderless.value)
 			flags |= SDL_WINDOW_BORDERLESS;
@@ -446,8 +448,8 @@ static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qb
 
 	SDL_SetWindowDisplayMode (draw_context, VID_SDL2_GetDisplayMode(width, height, refreshrate, bpp));
 	SDL_SetWindowBordered (draw_context, vid_borderless.value ? SDL_FALSE : SDL_TRUE);
-	SDL_SetWindowResizable (draw_context, vid_resize.value ? SDL_TRUE : SDL_FALSE );
-
+	//SDL_SetWindowResizable (draw_context, vid_resize.value ? SDL_TRUE : SDL_FALSE );
+	SDL_SetWindowResizable(draw_context, SDL_FALSE);
 	/* Make window fullscreen if needed, and show the window */
 
 	if (fullscreen) {
