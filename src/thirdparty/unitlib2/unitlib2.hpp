@@ -564,7 +564,7 @@ public:
 		printf("Performance test results for:\n%s", this->Name.c_str());
 		printf("=================================\n");
 		float ghz = CPerfTestSuite::get_cpu_frequency();
-		printf("\nCPU Frequency is at: %f\n%llu clocks per second.\n\n", ghz, ghz * 1000000000.0f);
+		printf("\nCPU Frequency is at: %f\n%f clocks per second.\n\n", ghz, ghz * 1000000000.0f);
 
 		for(auto x : this->Tests)
 		{
@@ -583,7 +583,7 @@ public:
 		stream << "Performance test results for:\n" << Name << "\n";
 		stream << "=================================\n";
 		float ghz = CPerfTestSuite::get_cpu_frequency();
-		printf("\nCPU Frequency is at: %f\n%llu clocks per second.\n\n", ghz, ghz * 1000000000.0f);
+		printf("\nCPU Frequency is at: %f\n%f clocks per second.\n\n", ghz, ghz * 1000000000.0f);
 		stream << "\nCPU Frequency is at: " << ghz << "\n" << (unsigned long long)ghz * 1000000000 << " clocks per second.\n\n";
 
 		for(auto x : this->Tests)

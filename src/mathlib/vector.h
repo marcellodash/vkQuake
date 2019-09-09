@@ -15,7 +15,7 @@ Notes:
 #include "platform.h"
 
 /* TODO: This should be cleaned up a bit, especially member naming */
-typedef ALIGN16 PACKED union vec3_s
+typedef ALIGN16 union vec3_s
 {
 	struct {
 		float x, y, z;
@@ -23,7 +23,7 @@ typedef ALIGN16 PACKED union vec3_s
 	float xyz[3];
 } vec3_t;
 
-typedef ALIGN16 PACKED union vec4_s
+typedef ALIGN16 union vec4_s
 {
 	struct {
 		float x, y, z, m;
@@ -32,7 +32,7 @@ typedef ALIGN16 PACKED union vec4_s
 } vec4_t;
 
 /* Not using SIMD stuff right now since a 2 component vector doesn't really need it much */
-typedef ALIGN16 PACKED union vec2_s
+typedef ALIGN16 union vec2_s
 {
 	struct {
 		float x, y;
@@ -40,7 +40,7 @@ typedef ALIGN16 PACKED union vec2_s
 	float xy[2];
 } vec2_t;
 
-typedef ALIGN16 PACKED union vec3d_s
+typedef ALIGN16 union vec3d_s
 {
 	struct {
 		double x, y, z;
@@ -48,7 +48,7 @@ typedef ALIGN16 PACKED union vec3d_s
 	double xyz[3];
 } vec3d_t;
 
-typedef ALIGN16 PACKED union vec4d_s
+typedef ALIGN16 union vec4d_s
 {
 	struct {
 		double x,y,z,m;
@@ -56,7 +56,7 @@ typedef ALIGN16 PACKED union vec4d_s
 	double xyzm[4];
 } vec4d_t;
 
-typedef ALIGN16 PACKED union vec2d_s
+typedef ALIGN16 union vec2d_s
 {
 	struct {
 		double x, y;

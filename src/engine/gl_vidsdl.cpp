@@ -605,7 +605,7 @@ static void GL_InitInstance( void )
 	if(!SDL_Vulkan_GetInstanceExtensions(draw_context, &sdl_extension_count, NULL))
 		Sys_Error("SDL_Vulkan_GetInstanceExtensions failed: %s", SDL_GetError());
 
-	const char ** const instance_extensions = malloc(sizeof(const char *) * (sdl_extension_count + 1));
+	const char ** const instance_extensions = (const char**)malloc(sizeof(const char *) * (sdl_extension_count + 1));
 	if(!SDL_Vulkan_GetInstanceExtensions(draw_context, &sdl_extension_count, instance_extensions))
 		Sys_Error("SDL_Vulkan_GetInstanceExtensions failed: %s", SDL_GetError());
 
@@ -645,7 +645,7 @@ static void GL_InitInstance( void )
 	if (!SDL_Vulkan_CreateSurface(draw_context, vulkan_instance, &vulkan_surface))
 		Sys_Error("Couldn't create Vulkan surface");
 
-	fpGetInstanceProcAddr = SDL_Vulkan_GetVkGetInstanceProcAddr();
+	fpGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)SDL_Vulkan_GetVkGetInstanceProcAddr();
 
 	GET_INSTANCE_PROC_ADDR(vulkan_instance, GetDeviceProcAddr);
 	GET_INSTANCE_PROC_ADDR(vulkan_instance, GetPhysicalDeviceSurfaceSupportKHR);
@@ -3285,11 +3285,11 @@ void SCR_ScreenShot_f (void)
 	}
 
 	if (!q_strncasecmp (ext, "png", sizeof(ext)))
-		ok = Image_WritePNG (imagename, buffer_ptr, glwidth, glheight, 32, true);
+		ok = Image_WritePNG (imagename, (byte*)buffer_ptr, glwidth, glheight, 32, true);
 	else if (!q_strncasecmp (ext, "tga", sizeof(ext)))
-		ok = Image_WriteTGA (imagename, buffer_ptr, glwidth, glheight, 32, true);
+		ok = Image_WriteTGA (imagename, (byte*)buffer_ptr, glwidth, glheight, 32, true);
 	else if (!q_strncasecmp (ext, "jpg", sizeof(ext)))
-		ok = Image_WriteJPG (imagename, buffer_ptr, glwidth, glheight, 32, quality, true);
+		ok = Image_WriteJPG (imagename, (byte*)buffer_ptr, glwidth, glheight, 32, quality, true);
 	else
 		ok = false;
 
