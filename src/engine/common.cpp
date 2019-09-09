@@ -36,6 +36,13 @@ cvar_t	cmdline = {"cmdline","",CVAR_ROM/*|CVAR_SERVERINFO*/}; /* sending cmdline
 
 static qboolean		com_modified;	// set true if using non-id files
 
+/* Enabled by default on debug builds */
+#ifdef _DEBUG
+qboolean isDevMode = 1;
+#else
+qboolean isDevMode = 0;
+#endif
+
 qboolean		fitzmode;
 
 static void COM_Path_f (void);

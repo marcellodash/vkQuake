@@ -614,7 +614,7 @@ void Host_GetConsoleCommands (void)
 {
 	const char	*cmd;
 
-	if (!isDedicated)
+	if (!isDedicated && !isDevMode)
 		return;	// no stdin necessary in graphical mode
 
 	while (1)

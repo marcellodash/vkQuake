@@ -303,6 +303,9 @@ extern struct cvar_s	registered;
 extern qboolean		standard_quake, rogue, hipnotic;
 extern qboolean		fitzmode;
 	/* if true, run in fitzquake mode disabling custom quakespasm hacks */
+	
+/* devmode enabled by default on debug builds */
+extern qboolean isDevMode;
 
 #endif	/* _Q_COMMON_H */
 
