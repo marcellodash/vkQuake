@@ -240,6 +240,16 @@ static void Con_MessageMode2_f (void)
 	key_dest = key_message;
 }
 
+/*
+================
+Con_ListCommands_f
+================
+*/
+static void Con_ListCommands_f(void)
+{
+	for(const char* cmd = Cmd_FirstCommand(); cmd; cmd = Cmd_NextCommand())
+		Con_Printf("\t%s\n", cmd);
+}
 
 /*
 ================
@@ -335,6 +345,7 @@ void Con_Init (void)
 	Cmd_AddCommand ("messagemode2", Con_MessageMode2_f);
 	Cmd_AddCommand ("clear", Con_Clear_f);
 	Cmd_AddCommand ("condump", Con_Dump_f); //johnfitz
+	Cmd_AddCommand ("listcmd", Con_ListCommands_f);
 	con_initialized = true;
 }
 

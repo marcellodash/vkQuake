@@ -719,6 +719,54 @@ void	Cmd_AddCommand (const char *cmd_name, xcommand_t function)
 
 /*
 ============
+Cmd_FirstCommand
+Used to iterate through all registered console commands
+============
+*/
+static cmd_function_t* ctx = NULL;
+const char* Cmd_FirstCommand()
+{
+	ctx = cmd_functions;
+	if(ctx)
+		return ctx->name;
+	else
+		return NULL;
+}
+
+/*
+============
+Cmd_NextCommand
+Gets the next command in the context.
+Returns NULL if there are no more.
+============
+*/
+const char* Cmd_NextCommand()
+{
+	if(!ctx) return NULL;
+	ctx = ctx->next;
+	if(!ctx) return NULL;
+	return ctx->name;
+}
+
+/*
+============
+Cmd_GetAllCommands()
+pbuf points to a valid buffer, and bufsize is the
+size (IN NUMBER OF COMMANDS IT CAN HOLD) of the buffer.
+Retuns the NUMBER of commands placed into pbuf
+============
+*/
+size_t Cmd_GetAllCommands(const char** pbuf, size_t bufsize)
+{
+	if(!pbuf || (bufsize < 1)) return 0;
+	int i = 0;
+	for(cmd_function_t* fn = cmd_functions; fn && (bufsize > 0); fn = fn->next, bufsize--, i++)
+		pbuf[i] = fn->name;
+	return i;
+}
+
+/*
+============
 Cmd_Exists
 ============
 */
