@@ -382,10 +382,22 @@ static qboolean VID_ValidMode (int width, int height, int refreshrate, int bpp, 
 
 /*
 ================
+VID_SetWindowSize
+================
+*/
+void VID_SetWindowSize(int w, int h)
+{
+	Cvar_SetValueQuick(&vid_width, w);
+	Cvar_SetValueQuick(&vid_width, h);
+	VID_Restart();
+}
+
+/*
+================
 VID_SetMode
 ================
 */
-static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qboolean fullscreen)
+qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qboolean fullscreen)
 {
 	int		temp;
 	Uint32	flags;
@@ -448,8 +460,8 @@ static qboolean VID_SetMode (int width, int height, int refreshrate, int bpp, qb
 
 	SDL_SetWindowDisplayMode (draw_context, VID_SDL2_GetDisplayMode(width, height, refreshrate, bpp));
 	SDL_SetWindowBordered (draw_context, vid_borderless.value ? SDL_FALSE : SDL_TRUE);
-	//SDL_SetWindowResizable (draw_context, vid_resize.value ? SDL_TRUE : SDL_FALSE );
-	SDL_SetWindowResizable(draw_context, SDL_FALSE);
+	SDL_SetWindowResizable (draw_context, vid_resize.value ? SDL_TRUE : SDL_FALSE );
+	//SDL_SetWindowResizable(draw_context, SDL_FALSE);
 	/* Make window fullscreen if needed, and show the window */
 
 	if (fullscreen) {
