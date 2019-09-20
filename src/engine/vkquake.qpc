@@ -307,7 +307,7 @@ files
 
 	folder "Resource Files"	[$WINDOWS]
 	{
-		"../../Windows/vkQuake.rc"
+		"vkQuake.rc"
 	}
 }
 

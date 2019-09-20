@@ -13,10 +13,29 @@ Shaders/Compiled/*spv
 Shaders/bintoc.exe
 Shaders/bintoc.obj
 Windows/VisualStudio/.vs
+
+game/*
+Release/*
+Debug/*
+
+**/Release/*
+**/Debug/*
+
+
 *.qpc_hash
 *.sln
 *.vcxproj
 *.filters
+*.obj
+*.tlog
+*.idb
+*.pdb
+*.log
+*.ipch
+*.db
+*.db-shm
+*.db-wal
+*.opendb
 
 build/
 
@@ -25,3 +44,7 @@ bin/
 lib/
 
 \.vscode/
+.kdev4/
+*.swp
+*.kdev4
+game/

@@ -3,34 +3,34 @@
 # 
 project(engine C CXX)
 
-#file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/ *.c *.cc *.cpp *.cxx *.h *.hpp *.hh *.hxx)
+#file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/ *.cpp *.cppc *.cpppp *.cppxx *.h *.hpp *.hh *.hxx)
 
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(Vulkan REQUIRED vulkan)
 
-set(SRCS		bgmusic.c
-				snd_codec.c
-				snd_flac.c
-				snd_wave.c
-				snd_vorbis.c
-				snd_opus.c
-				snd_mikmod.c
-				snd_xmp.c
-				snd_umx.c
-				snd_dma.c
-				snd_mix.c
-				snd_mem.c
-				snd_sdl.c
-				cd_sdl.c
-				in_sdl.c
-				gl_vidsdl.c
-				net_bsd.c
-				net_udp.c
-				pl_linux.c
-				sys_sdl_unix.c
-				main_sdl.c
+set(SRCS		bgmusic.cpp
+				snd_codec.cpp
+				snd_flac.cpp
+				snd_wave.cpp
+				snd_vorbis.cpp
+				snd_opus.cpp
+				snd_mikmod.cpp
+				snd_xmp.cpp
+				snd_umx.cpp
+				snd_dma.cpp
+				snd_mix.cpp
+				snd_mem.cpp
+				snd_sdl.cpp
+				cd_sdl.cpp
+				in_sdl.cpp
+				gl_vidsdl.cpp
+				net_bsd.cpp
+				net_udp.cpp
+				pl_linux.cpp
+				sys_sdl_unix.cpp
+				main_sdl.cpp
 				${ROOT}/src/shaders/Compiled/alias_frag.c
 				${ROOT}/src/shaders/Compiled/alias_alphatest_frag.c
 				${ROOT}/src/shaders/Compiled/alias_vert.c
@@ -49,59 +49,59 @@ set(SRCS		bgmusic.c
 				${ROOT}/src/shaders/Compiled/world_vert.c
 				${ROOT}/src/shaders/Compiled/showtris_frag.c
 				${ROOT}/src/shaders/Compiled/showtris_vert.c
-				gl_refrag.c
-				gl_rlight.c
-				gl_rmain.c
-				gl_fog.c
-				gl_rmisc.c
-				r_part.c
-				r_world.c
-				gl_screen.c
-				gl_sky.c
-				gl_warp.c
-				gl_draw.c
-				image.c
-				gl_texmgr.c
-				gl_mesh.c
-				gl_heap.c
-				r_sprite.c
-				r_alias.c
-				r_brush.c
-				gl_model.c
-				strlcat.c
-				strlcpy.c
-				net_dgrm.c
-				net_loop.c
-				net_main.c
-				chase.c
-				cl_demo.c
-				cl_input.c
-				cl_main.c
-				cl_parse.c
-				cl_tent.c
-				console.c
-				keys.c
-				menu.c
-				sbar.c
-				view.c
-				wad.c
-				cmd.c
-				common.c
-				crc.c
-				cvar.c
-				cfgfile.c
-				host.c
-				host_cmd.c
-				mathlib.c
-				pr_cmds.c
-				pr_edict.c
-				pr_exec.c
-				sv_main.c
-				sv_move.c
-				sv_phys.c
-				sv_user.c
-				world.c
-				zone.c)
+				gl_refrag.cpp
+				gl_rlight.cpp
+				gl_rmain.cpp
+				gl_fog.cpp
+				gl_rmisc.cpp
+				r_part.cpp
+				r_world.cpp
+				gl_screen.cpp
+				gl_sky.cpp
+				gl_warp.cpp
+				gl_draw.cpp
+				image.cpp
+				gl_texmgr.cpp
+				gl_mesh.cpp
+				gl_heap.cpp
+				r_sprite.cpp
+				r_alias.cpp
+				r_brush.cpp
+				gl_model.cpp
+				strlcat.cpp
+				strlcpy.cpp
+				net_dgrm.cpp
+				net_loop.cpp
+				net_main.cpp
+				chase.cpp
+				cl_demo.cpp
+				cl_input.cpp
+				cl_main.cpp
+				cl_parse.cpp
+				cl_tent.cpp
+				console.cpp
+				keys.cpp
+				menu.cpp
+				sbar.cpp
+				view.cpp
+				wad.cpp
+				cmd.cpp
+				common.cpp
+				crc.cpp
+				cvar.cpp
+				cfgfile.cpp
+				host.cpp
+				host_cmd.cpp
+				mathlib.cpp
+				pr_cmds.cpp
+				pr_edict.cpp
+				pr_exec.cpp
+				sv_main.cpp
+				sv_move.cpp
+				sv_phys.cpp
+				sv_user.cpp
+				world.cpp
+				zone.cpp)
 				
 if(DEFINED LINUX_BUILD)
 	list(APPEND CMAKE_REQUIRED_LIBRARIES m glibc pthread c)

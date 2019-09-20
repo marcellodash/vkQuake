@@ -18,7 +18,7 @@ Prerequisites:
 Start `Git Bash` and clone the vkQuake repo:
 
 ~~~
-git clone https://github.com/Novum/vkQuake.git
+git clone --recursive https://github.com/quiverteam/vkQuake.git
 ~~~
 
 ### Visual Studio
@@ -81,7 +81,7 @@ pacman -S git flac glibc libgl libmad libvorbis libx11 sdl2 vulkan-validation-la
 Then clone the vkQuake repo:
 
 ~~~
-git clone https://github.com/Novum/vkQuake.git
+git clone --recursive https://github.com/quiverteam/vkQuake.git
 ~~~
 
 Now go to the Quake directory and compile the executable:
@@ -105,7 +105,7 @@ brew install molten-vk vulkan-headers sdl2 libvorbis flac mad
 Then clone the vkQuake repo:
 
 ~~~
-git clone https://github.com/Novum/vkQuake.git
+git clone --recursive https://github.com/quiverteam/vkQuake.git
 ~~~
 
 Now go to the Quake directory and compile the executable:

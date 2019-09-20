@@ -130,5 +130,33 @@ void	Cmd_Print (const char *text);
 // used by command functions to send output to either the graphics console or
 // passed as a print message to the client
 
+
+/*
+============
+Cmd_FirstCommand
+Used to iterate through all registered console commands
+============
+*/
+const char* Cmd_FirstCommand();
+
+/*
+============
+Cmd_NextCommand
+Gets the next command in the context.
+Returns NULL if there are no more.
+============
+*/
+const char* Cmd_NextCommand();
+
+/*
+============
+Cmd_GetAllCommands()
+pbuf points to a valid buffer, and bufsize is the
+size (IN NUMBER OF COMMANDS IT CAN HOLD) of the buffer.
+Retuns the NUMBER of commands placed into pbuf
+============
+*/
+size_t Cmd_GetAllCommands(const char** pbuf, size_t bufsize);
+
 #endif	/* _QUAKE_CMD_H */
 
