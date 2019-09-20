@@ -22,7 +22,7 @@ configuration
 		out_dir		"$SRC_DIR/../game/$PLAT_FOLDER/$CONFIG/"
 		int_dir		"$CONFIG/$PLAT_FOLDER"
 		
-	//	language cpp
+		language cpp
 		
 		toolset_version "msvc-v142"		[$WINDOWS && $VSTUDIO]
 		toolset_version "gcc"			[$MAKEFILE && $GCC]
@@ -51,7 +51,7 @@ configuration
 		{
 			/Od /MDd /ZI /RTC1	[$DEBUG]
 			/O2 /MD /Zi			[$RELEASE]
-			/TC /W3
+			/W3
 		}
 	}
 	

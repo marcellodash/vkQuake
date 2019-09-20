@@ -9,7 +9,6 @@ configuration
 	general	
 	{
 		configuration_type	dynamic_library
-		language cpp
 	}
 	
 	linker
