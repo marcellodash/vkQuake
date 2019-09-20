@@ -1,6 +1,7 @@
 
-macro PROJECT_NAME "VkQuake"
-macro SRC_DIR ".."
+macro PROJECT_NAME 	"VkQuake"
+macro OUT_NAME		"vkquake"
+macro SRC_DIR 		".."
 
 include "$SRC_DIR/_qpc_scripts/base_common.qpc"
 
@@ -77,12 +78,23 @@ configuration
 		command_line	"copy \"$(SolutionDir)thirdparty\SDL2\lib\*.dll\" \"$(TargetDir)\""						[$WIN32]
 		command_line	"copy \"$(SolutionDir)thirdparty\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$WIN64]
 		
-		use_in_build	"true"
+		/*command_line	[$WINDOWS]
+		{
+			"copy \"$(SolutionDir)thirdparty\codecs\$ARCH_FOLDER\*.dll\" \"$(TargetDir)\""
+			
+			"copy \"$(SolutionDir)thirdparty\SDL2\lib\*.dll\" \"$(TargetDir)\""			[$WIN32]
+			"copy \"$(SolutionDir)thirdparty\SDL2\lib64\*.dll\" \"$(TargetDir)\""		[$WIN64]
+		}*/
 	}
 }
 
 files
 {
+	folder "Entities"
+	{
+		"ent_mesh_static.c"
+	}
+	
 	folder "Sound"
 	{
 		"snd_codec.c"

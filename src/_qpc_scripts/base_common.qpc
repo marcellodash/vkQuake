@@ -1,5 +1,6 @@
 
 macro SRC_DIR
+macro OUT_NAME	"$PROJECT_NAME"		[!$OUT_NAME]
 
 macro CONFIG "Debug" 	[$DEBUG]
 macro CONFIG "Release" 	[$RELEASE]
@@ -14,9 +15,10 @@ macro PLAT_FOLDER "linux64" 	[$LINUX64]
 macro PLAT_FOLDER "macos" 		[$MACOS]
 
 configuration
-{	
+{
 	general	
 	{
+		out_name	"$OUT_NAME"
 		out_dir		"$SRC_DIR/../game/$PLAT_FOLDER/$CONFIG/"
 		int_dir		"$CONFIG/$PLAT_FOLDER"
 		
