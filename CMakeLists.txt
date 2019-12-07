@@ -15,6 +15,7 @@
 #	-	aarch32 (with/without NEON or SVE)
 #	-	aarch64 (with/without NEON or SVE)
 cmake_minimum_required(VERSION 3.6)
+project(vkQuake)
 
 option(VECTORIZE "Vectorize C/C++ code and math functions" ON)
 option(LIBM_FOR_SIMD "Instead of using SIMD vectorization intrinsics, use libm stuff" OFF)
@@ -41,7 +42,7 @@ set(OPUS_PATHS 		"${CODECS}")
 
 if(NOT DEFINED PLATFORM)
 	message("No platform specified, defaulting to x86. You can specify this with -DPLATFORM=<x86, x64, aarch64, aarch32>")
-	set(PLATFORM "x86")
+	set(PLATFORM "x64")
 endif(NOT DEFINED PLATFORM)
 
 message("Building for ${CMAKE_SYSTEM_PROCESSOR}")
