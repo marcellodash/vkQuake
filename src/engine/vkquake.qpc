@@ -1,6 +1,7 @@
 
-macro PROJECT_NAME "VkQuake"
-macro SRC_DIR ".."
+macro PROJECT_NAME 	"VkQuake"
+macro OUT_NAME		"vkquake"
+macro SRC_DIR 		".."
 
 include "$SRC_DIR/_qpc_scripts/base_common.qpc"
 
@@ -12,7 +13,6 @@ configuration
 	general	
 	{
 		configuration_type		application
-		language c
 		
 		library_directories		[$VSTUDIO]
 		{
@@ -77,29 +77,40 @@ configuration
 		command_line	"copy \"$(SolutionDir)thirdparty\SDL2\lib\*.dll\" \"$(TargetDir)\""						[$WIN32]
 		command_line	"copy \"$(SolutionDir)thirdparty\SDL2\lib64\*.dll\" \"$(TargetDir)\""					[$WIN64]
 		
-		use_in_build	"true"
+		/*command_line	[$WINDOWS]
+		{
+			"copy \"$(SolutionDir)thirdparty\codecs\$ARCH_FOLDER\*.dll\" \"$(TargetDir)\""
+			
+			"copy \"$(SolutionDir)thirdparty\SDL2\lib\*.dll\" \"$(TargetDir)\""			[$WIN32]
+			"copy \"$(SolutionDir)thirdparty\SDL2\lib64\*.dll\" \"$(TargetDir)\""		[$WIN64]
+		}*/
 	}
 }
 
 files
 {
+	folder "Entities"
+	{
+		"ent_mesh_static.c"
+	}
+	
 	folder "Sound"
 	{
-		"snd_codec.c"
-		"snd_dma.c"
-		"snd_flac.c"
-		"snd_mem.c"
-		"snd_mikmod.c"
-		"snd_mix.c"
-		"snd_mp3.c"
-		"snd_opus.c"
-		"snd_sdl.c"
-		"snd_umx.c"
-		"snd_vorbis.c"
-		"snd_wave.c"
-		"snd_xmp.c"
-		"cd_sdl.c"
-		"bgmusic.c"
+		"snd_codec.cpp"
+		"snd_dma.cpp"
+		"snd_flac.cpp"
+		"snd_mem.cpp"
+		"snd_mikmod.cpp"
+		"snd_mix.cpp"
+		"snd_mp3.cpp"
+		"snd_opus.cpp"
+		"snd_sdl.cpp"
+		"snd_umx.cpp"
+		"snd_vorbis.cpp"
+		"snd_wave.cpp"
+		"snd_xmp.cpp"
+		"cd_sdl.cpp"
+		"bgmusic.cpp"
 		
 		"snd_codec.h"
 		"snd_codeci.h"
@@ -117,14 +128,14 @@ files
 		
 	folder "Network"
 	{
-		"net_dgrm.c"
-		"net_loop.c"
-		"net_main.c"
-		"net_win.c"		[$WINDOWS]
-		"net_bsd.c"		[$POSIX]
-		"net_udp.c"		[$POSIX]
-		"net_wins.c"
-		"net_wipx.c"
+		"net_dgrm.cpp"
+		"net_loop.cpp"
+		"net_main.cpp"
+		"net_win.cpp"		[$WINDOWS]
+		"net_bsd.cpp"		[$POSIX]
+		"net_udp.cpp"		[$POSIX]
+		"net_wins.cpp"
+		"net_wipx.cpp"
 		
 		"net.h"
 		"net_defs.h"
@@ -137,26 +148,26 @@ files
 
 	folder "Renderer"
 	{
-		"gl_draw.c"
-		"gl_fog.c"
-		"gl_mesh.c"
-		"gl_model.c"
-		"gl_refrag.c"
-		"gl_rlight.c"
-		"gl_rmain.c"
-		"gl_rmisc.c"
-		"gl_screen.c"
-		"gl_sky.c"
-		"gl_texmgr.c"
-		"gl_vidsdl.c"
-		"gl_warp.c"
-		"gl_heap.c"
+		"gl_draw.cpp"
+		"gl_fog.cpp"
+		"gl_mesh.cpp"
+		"gl_model.cpp"
+		"gl_refrag.cpp"
+		"gl_rlight.cpp"
+		"gl_rmain.cpp"
+		"gl_rmisc.cpp"
+		"gl_screen.cpp"
+		"gl_sky.cpp"
+		"gl_texmgr.cpp"
+		"gl_vidsdl.cpp"
+		"gl_warp.cpp"
+		"gl_heap.cpp"
 			
-		"r_alias.c"
-		"r_brush.c"
-		"r_part.c"
-		"r_sprite.c"
-		"r_world.c"
+		"r_alias.cpp"
+		"r_brush.cpp"
+		"r_part.cpp"
+		"r_sprite.cpp"
+		"r_world.cpp"
 		
 		"gl_model.h"
 		"gl_texmgr.h"
@@ -170,36 +181,36 @@ files
 
 	folder "Main"
 	{
-		"cfgfile.c"
-		"chase.c"
-		"cmd.c"
-		"common.c"
-		"console.c"
-		"crc.c"
-		"cvar.c"
-		"host.c"
-		"host_cmd.c"
-		"image.c"
-		"in_sdl.c"
-		"keys.c"
-		"main_sdl.c"
-		"mathlib.c"
-		"menu.c"
-		"pl_win.c"		[$WINDOWS]
-		"pl_linux.c"	[$LINUX]
-		"pl_osx.c"		[$MACOS]
-		"pr_cmds.c"
-		"pr_edict.c"
-		"pr_exec.c"
-		"sbar.c"
-		"strlcat.c"
-		"strlcpy.c"
-		"sys_sdl_win.c"		[$WINDOWS]
-		"sys_sdl_unix.c"	[$POSIX]
-		"view.c"
-		"wad.c"
-		"world.c"
-		"zone.c"
+		"cfgfile.cpp"
+		"chase.cpp"
+		"cmd.cpp"
+		"common.cpp"
+		"console.cpp"
+		"crc.cpp"
+		"cvar.cpp"
+		"host.cpp"
+		"host_cmd.cpp"
+		"image.cpp"
+		"in_sdl.cpp"
+		"keys.cpp"
+		"main_sdl.cpp"
+		"mathlib.cpp"
+		"menu.cpp"
+		"pl_win.cpp"		[$WINDOWS]
+		"pl_linux.cpp"	[$LINUX]
+		"pl_osx.cpp"		[$MACOS]
+		"pr_cmds.cpp"
+		"pr_edict.cpp"
+		"pr_exec.cpp"
+		"sbar.cpp"
+		"strlcat.cpp"
+		"strlcpy.cpp"
+		"sys_sdl_win.cpp"		[$WINDOWS]
+		"sys_sdl_unix.cpp"	[$POSIX]
+		"view.cpp"
+		"wad.cpp"
+		"world.cpp"
+		"zone.cpp"
 			
 		"anorm_dots.h"
 		"anorms.h"
@@ -243,19 +254,19 @@ files
 
 	folder "Client"
 	{
-		"cl_tent.c"
-		"cl_demo.c"
-		"cl_input.c"
-		"cl_main.c"
-		"cl_parse.c"
+		"cl_tent.cpp"
+		"cl_demo.cpp"
+		"cl_input.cpp"
+		"cl_main.cpp"
+		"cl_parse.cpp"
 	}
 
 	folder "Server"
 	{
-		"sv_main.c"
-		"sv_move.c"
-		"sv_phys.c"
-		"sv_user.c"
+		"sv_main.cpp"
+		"sv_move.cpp"
+		"sv_phys.cpp"
+		"sv_user.cpp"
 	}
 
 	folder "Shaders"

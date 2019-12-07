@@ -8,7 +8,6 @@ configuration
 	general	
 	{
 		configuration_type	application
-		language cpp
 	}
 	
 	linker
